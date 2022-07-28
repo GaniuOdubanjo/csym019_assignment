@@ -1,0 +1,68 @@
+{
+	
+	"$schema": "http://json-schema.org/draft-04/schema#", 
+	"title": "BBC Good Food Recipes", 
+    "description": "list of recipes from BBC goodfood ",
+	"type": "object",
+	"properties": {
+		"recipes": {
+            "type" : "array",
+			"items": {
+				"type": "object",
+				"properties": {
+                    "id": { "type": "integer" },
+					"title": { "type": "string" },
+					"author": { "type": "string" },
+					"preparation time": { "type": "string" },
+					"cooking time": { "type": "string"},
+					"complexity": { "type": "string"},
+					"serves": { "type": "integer"},
+					"description": { "type": "string"},
+					"ratings": { "type": "integer"},
+					"nutritionperserving": { "type": "object"},
+                        "properties": {
+                            "kcal": { "type" : "integer" },
+                            "fat(g)": { "type" : "integer"},
+                            "saturates(g)": { "type" : "integer"},
+                            "carbs(g)": { "type" : "integer"},
+                            "sugars(g)": { "type" : "integer"},
+                            "fibre(g)": { "type" : "integer"},
+                            "protein(g)":{ "type" : "integer"},
+                            "salt(g)": { "type" : "number"}
+                        },
+					"Ingredients":{
+                        "type" : "array",
+                        "items": { 
+                           "type":"string"
+                    },
+					"steps":{
+                        "type" : "array",
+                        "items": { 
+                           "type":"string"
+                    },
+					"image": {
+                        "type":"string"
+                    }
+                }
+            }		
+            },
+            "required" :[
+                "id",
+                "title",
+                "author",
+                "preparationtime",
+                "complexity",
+                "serves",
+                "description",
+                "ratings",
+                "nutritionperserving",
+                "ingredients",
+                "steps",
+                "image"
+            ]		
+    }          
+
+  }             
+}
+}
+         
