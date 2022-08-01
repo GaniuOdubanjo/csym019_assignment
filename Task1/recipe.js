@@ -56,6 +56,6 @@ function makeAjaxRequest(){                // function makeAjaxRequest checks if
 (function update() {             //update function is a self executing function that keeps calling itself
     setTimeout(function (){     //function setTimeout execute makeAjaxRequest 
         makeAjaxRequest();
-        update();
+        update(); 
     }, 2500)
 })();
