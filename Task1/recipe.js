@@ -1,4 +1,4 @@
- $ (document).ready(
+ $(document).ready(
     (function UpdateRecipes(){     //function updateRecipes is self-executing
         setTimeout(function() {
        $.ajax({                  //$.ajax function retrieve data from json file
@@ -9,7 +9,7 @@
             let text = "";                  //declaring a variable text 
             $("#recipedata").html(" ");
             $.each(data.recipes, function(index){
-               text += text += "<tr><td>" + data.recipes[index].id  +"<td>"+ data.recipes[index].title +"<td>"+     //Storing data for table using html tags.
+            text += "<tr><td>" + data.recipes[index].id  +"<td>"+ data.recipes[index].title +"<td>"+     //Storing data for table using html tags.
                data.recipes[index].author +"<td>" + data.recipes[index].preparationtime  +"<td>" +
                 data.recipes[index].cookingtime +"<td>"+ data.recipes[index].complexity +"<td>"+
                  data.recipes[index].serves + "<td>" + data.recipes[index].description + "<td>"+ 
@@ -22,11 +22,11 @@
                 +  "protein(g):"+ data.recipes[index].nutritionperserving.protein +"</li>" + "<li>"
                 +  "salt(g):"+ data.recipes[index].nutritionperserving.salt +"</li></td><td>"; //storing data for table 
              
-                  for (let i=0; i<data.recipes[index].ingredients.length;i++){     //The for loop loops through the ingredients(array) data
-                      text += "<ul><li>" + data.recipes[index].ingredients[i]  + "</li></ul>"    //concatenating the data and saving it to txt
+                  for (let index=0; index<data.recipes[index].ingredients.length;index++){     //The for loop loops through the ingredients(array) data
+                      text += "<ul><li>" + data.recipes[index].ingredients[index]  + "</li></ul>"    //concatenating the data and saving it to txt
                   }
                   text += "</td><td>";
-                  for(let i=0;i<data.recipes[index].steps.length; i++){           //The for loop loops through the steps(array) data
+                  for(let index=0;index<data.recipes[index].steps.length; index++){           //The for loop loops through the steps(array) data
                     text += "<ul><li><b>" + "Step" + (index+1) + " :</b>" + data.recipes[index].steps[index] + "</li></ul>"   //concatenating the data and saving it to txt
                   }
                   text+= "</td><td><img src='"+ data.recipes[index].image +"'> </td></tr>";
@@ -36,7 +36,7 @@
 
             });
             $("#recipedata").append(text);  //attach the data to the div
-            UpdateRecipes(); // updateRecipes called within itself
+           UpdateRecipes(); // updateRecipes called within itself
         },
         error: function(){
             $("#updatemessage").html("<p> an error occurred</p>");
