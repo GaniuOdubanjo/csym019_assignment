@@ -3,6 +3,7 @@
     <head>
         <title>Recipe Report</title>
         <link rel="stylesheet" href="layout.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script type="text/javascript"></script>
     </head>
     <body>
         <header>
@@ -16,19 +17,7 @@
         </nav>
         <main>
             <h3>Recipe Report</h3>
-            <?php
- if(isset($_POST['submit'])){           //if the submit button is clicked, it will save the data passed into database.
-    $server = 'db';
-    $username = 'root';
-    $password = 'csym019';
-    $schema = 'GoodFoodRecipes';    //The name of the database
-    $pdo = new PDO('mysql:dbname=' . $schema . ';host=' . $server, $username, $password,
-    [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
- 
-
-
- }
-?>
+            
          
         </main>
         <footer>&copy; CSYM019 2022</footer>
