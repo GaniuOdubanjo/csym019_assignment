@@ -4,6 +4,9 @@
         <title>Recipe Report</title>
         <link rel="stylesheet" href="layout.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script type="text/javascript"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script> <!--library for chartjs-->
+        <link rel="stylesheet" href="layout.css"> <!--calls the layout.css-->
+        <script src="script.js"></script>
     </head>
     <body>
         <header>
@@ -16,18 +19,25 @@
             </ul>
         </nav>
         <main>
-            <h3>Recipe Report</h3>
-            <?php
- if(isset($_POST['check_list'])){           //if the submit button is clicked, it will save the data passed into database.
-    include('./connection.php');
-    $loadData=array();     //declaring and array
-    foreach($_POST['check_list'] as $check) {
-        $stmt = $pdo->prepare('select kcal, fat,saturates,carbs,sugars,fibre,protein,salt,recipe_id from nutritionperserving  where id = ?');
-        $values = [$check];
-        $stmt->execute($values);
-        $records = $stmt->fetch();
-        array_push($loadData, array(    // takes an array and multiple object
-            'recipe_id'=> $records['recipe_id'],
+        <h3>Recipe Report</h3>   
+        <div >           
+        <h1>chartJS pie Chart</h1>
+        <canvas id="canvas"></canvas>  <!--Id for the pie chart-->
+        </div>
+        <div >
+        <h1>chartJS bar Chart</h1>
+        <canvas id="canvas1"></canvas>   <!--id for the bar chart-->
+        </div>
+     <?php
+        if(isset($_POST['check_list'])){           //if the submit button is clicked, it will save the data passed into database.
+        include('./connection.php');
+        $loadData=array();     //declaring and array
+        foreach($_POST['check_list'] as $check) {  //loops through the selected recipes
+        $stmt = $pdo->prepare('select n.kcal, n.fat,n.saturates,n.carbs,n.sugars,n.fibre,n.protein,n.salt,r.title from nutritionperserving n left join Recipes r on n.id=r.id where r.id = ?');// query to select the checked recipe(s)
+        $stmt->execute([$check]);  //execute it
+        $records = $stmt->fetch();  //variable $records holds the fetch item
+        array_push($loadData, array(    //array_push takes an array and multiple object i want to store
+            'title'=> $records['title'],
             'fat' =>  $records['fat'],
             'kcal' =>  $records['kcal'],
             'saturates' => $records['saturates'],
@@ -38,31 +48,21 @@
             'salt' =>  $records['salt']
         ));
     }
-    echo '<p>'. json_encode($loadData) .'</p>';  
-    $number=0;    // declaring a variable $number
-
     file_put_contents('record.json', json_encode($loadData)); // adding the array to the json file 
-    if(filesize("record.json")==$number){   //checks if there is a json data in the record.json, if not it creates one
-            $initial_json= array($loadData);   //array holds json if this id the first data
-            $save_json=$initial_json;
-    }else{
-        $old_json=json_decode(file_get_contents('record.json'));// checks if this is the first json data
-        array_push($old_json,$array);   //adds new data to the array  
-        $save_json=$old_json;      // assigns the data to $save_json variable
+    echo '<table><tr><th>Title</th><th>Fat</th><th>Kcal</th><th>Saturates</th><th>carbs</th><th>Fibre</th><th>Sugars</th><th>protein</th><th>salt</th></tr>'; //creates a table for the recipes
+    foreach($loadData as $row){  //foreach loops through the data
+     echo '<tr><td>'.$row['title'].'</td><td>'.$row['fat'].'</td><td>'.$row['kcal'].'</td><td>'.$row['saturates'].'</td>
+      <td>'.$row['carbs'].'</td><td>'.$row['fibre'].'</td><td>'.$row['sugars'].'</td><td>'.$row['protein'].'</td><td>'.$row['salt'].'</td></tr>'; 
     }
-    file_get_contents("record.json",json_encode($save_json,JSON_PRETTY_PRINT)); //stores the new data to record.json file
-
+    echo '</table>';
+  
 }
-     echo '<table><tr><th>recipe_id</th><th>Fat</th><th>Kcal</th><th>Saturates</th><th>carbs</th><th>Sugars</th><th>protein</th><th>salt</th></tr>';
-     echo '<tr><td>'.$records['recipe_id'].'</td><<td>'.$records['fat'].'</td><td>'.$records['kcal'].'</td><td>'.$records['saturates'].'</td>
-     <td>'.$records['carbs'].'</td><td>'.$records['sugars'].'</td><td>'.$records['protein'].'</td><td>'.$records['salt'].'</td></tr>';
-
-     echo '</table>';
+   
 ?>
-     <div>
 
-     </div>    
+     
+         
         </main>
-        <footer>&copy; CSYM019 2022</footer>
+        
     </body>
 </html>

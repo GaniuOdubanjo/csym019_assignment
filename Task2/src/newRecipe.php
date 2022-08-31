@@ -16,7 +16,7 @@
         </nav>
         <main>
             <h3>New Recipe Entery Form</h3>
-            <form action="/newRecipe.php" method="POST">              <!--form tag for accepting data-->
+            <form action="newRecipe.php" method="POST">              <!--form element for posting data-->
                 title:<p><input type="text" name="title"/></p>
                 author:<p><input type="text" name="author"/></p>
                 preparationTime:<p><input type="text" name="preparationtime"/></p>  
@@ -39,18 +39,13 @@
             </form>
             <?php
             if(isset($_POST['submit'])){           //if the submit button is clicked, it will save the data passed into database.
-            $server = 'db';
-            $username = 'root';
-            $password = 'csym019';
-            $schema = 'GoodFoodRecipes';    //The name of the database
-            $pdo = new PDO('mysql:dbname=' . $schema . ';host=' . $server, $username, $password,
-            [ PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            include('./connection.php');      //connection to database
         
             $stmt = $pdo->prepare('INSERT INTO Recipes(title,author,preparationtime,cookingtime,complexity,serves,`description`,ratings)  
             VALUES (?,?,?,?,?,?,?,?)');   // preparing the query(inserting the passed value)
 
-            $values = [
-            $_POST['title'],                     //get the user input using the post
+            $values = [                     //get the user inputs using the $_POST and save it in the database
+            $_POST['title'],                     
             $_POST['author'],
             $_POST['preparationtime'],
             $_POST['cookingtime'],
@@ -59,7 +54,7 @@
             $_POST['description'],
             $_POST['ratings']
             ];
-            $stmt->execute($values);
+            $stmt->execute($values);    //process the added recipe
             $recipe_id = $pdo -> lastInsertId(); //get id and asign it to variable called recipe_id
             echo '<h2>' .'Form submitted'.'</h2>';
             // store ingredient
@@ -74,7 +69,7 @@
             $stmt = $pdo->prepare('INSERT INTO nutritionperserving(kcal,fat,saturates,carbs,sugars,fibre,protein,salt,recipe_id) 
             VALUES (?,?,?,?,?,?,?,?,?)');
              $values = [
-                $_POST['kcal'],                     //get the user input using the post
+                $_POST['kcal'],                     //get the user input using the post and save it in the database
                 $_POST['fat'],
                 $_POST['saturates'],
                 $_POST['carbs'],
@@ -84,7 +79,7 @@
                 $_POST['salt'],
                 $recipe_id];
             $stmt->execute($values); 
-           $steps_id = $stmt->id; //get id and asign it to variable called ingredient_id*/
+           $steps_id = $stmt->id; //get id and asign it to variable called $steps_id
             }
             
 ?>

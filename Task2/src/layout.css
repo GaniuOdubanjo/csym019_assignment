@@ -13,6 +13,20 @@ header {
     padding: 10px;
     grid-area: header;
 }
+.container{
+    width:30%;
+}
+hi{
+    font-size: 46px;
+    text-align: center;
+}
+#canvas{
+    width:400px;
+}
+#canvas1{
+    width:600px;
+}
+
 
 nav {
     background-color: whitesmoke;
