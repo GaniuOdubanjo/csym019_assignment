@@ -20,19 +20,11 @@
         </nav>
         <main>
         <h3>Recipe Report</h3>   
-        <div >           
-        <h1>chartJS pie Chart</h1>
-        <canvas id="canvas"></canvas>  <!--Id for the pie chart-->
-        </div>
-        <div >
-        <h1>chartJS bar Chart</h1>
-        <canvas id="canvas1"></canvas>   <!--id for the bar chart-->
-        </div>
      <?php
         if(isset($_POST['check_list'])){           //if the submit button is clicked, it will save the data passed into database.
         include('./connection.php');
         $loadData=array();     //declaring and array
-        foreach($_POST['check_list'] as $check) {  //loops through the selected recipes
+        foreach($_POST['check_list'] as $check) {  //loops through the checked boxes
         $stmt = $pdo->prepare('select n.kcal, n.fat,n.saturates,n.carbs,n.sugars,n.fibre,n.protein,n.salt,r.title from nutritionperserving n left join Recipes r on n.id=r.id where r.id = ?');// query to select the checked recipe(s)
         $stmt->execute([$check]);  //execute it
         $records = $stmt->fetch();  //variable $records holds the fetch item
@@ -48,8 +40,9 @@
             'salt' =>  $records['salt']
         ));
     }
-    file_put_contents('record.json', json_encode($loadData)); // adding the array to the json file 
+    file_put_contents('record.json', json_encode($loadData)); // adds the array to the json file 
     echo '<table><tr><th>Title</th><th>Fat</th><th>Kcal</th><th>Saturates</th><th>carbs</th><th>Fibre</th><th>Sugars</th><th>protein</th><th>salt</th></tr>'; //creates a table for the recipes
+    
     foreach($loadData as $row){  //foreach loops through the data
      echo '<tr><td>'.$row['title'].'</td><td>'.$row['fat'].'</td><td>'.$row['kcal'].'</td><td>'.$row['saturates'].'</td>
       <td>'.$row['carbs'].'</td><td>'.$row['fibre'].'</td><td>'.$row['sugars'].'</td><td>'.$row['protein'].'</td><td>'.$row['salt'].'</td></tr>'; 

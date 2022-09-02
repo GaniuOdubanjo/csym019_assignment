@@ -1,15 +1,15 @@
- $(document).ready(
+$(document).ready(
     (function UpdateRecipes(){     //function updateRecipes is self-executing
         setTimeout(function() {
        $.ajax({                  //$.ajax function retrieve data from json file
-        url: "recipe.json",
-        type:"GET",
-        dataType:"json",
+        url: "recipe.json",       //location of the file
+        type:"GET",                //method used in getting the data
+        dataType:"json",            //type of object
         success: function(data){
             let text = "";                  //declaring a variable text 
             $("#recipedata").html(" ");
             $.each(data.recipes, function(index){
-            text += "<tr><td>" + data.recipes[index].id  +"<td>"+ data.recipes[index].title +"<td>"+     //Storing data for table using html tags.
+            text += "<tr><td>" + data.recipes[index].id  +"<td>"+ data.recipes[index].title +"<td>"+     //Stores data for each column in the table
                data.recipes[index].author +"<td>" + data.recipes[index].preparationtime  +"<td>" +
                 data.recipes[index].cookingtime +"<td>"+ data.recipes[index].complexity +"<td>"+
                  data.recipes[index].serves + "<td>" + data.recipes[index].description + "<td>"+ 
@@ -31,7 +31,7 @@
                   }
                   text+= "</td><td><img src='"+ data.recipes[index].image +"'> </td></tr>";
                  
-                  console.log(data.recipes[index].cookingtime);          
+    
 
 
             });

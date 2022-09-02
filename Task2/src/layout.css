@@ -20,7 +20,7 @@ hi{
     font-size: 46px;
     text-align: center;
 }
-#canvas{
+#canvas, canvas{
     width:400px;
 }
 #canvas1{
