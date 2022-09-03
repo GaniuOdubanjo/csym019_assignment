@@ -28,6 +28,9 @@ function loadchart() {
             container.className="container";//assigns a classname in the css 
             var myElement = document.createElement('canvas');  //creates an element canvas
             container.appendChild(myElement); //adds the created element to the container
+            var kcal = document.createElement('p');  //creates an element paragraph
+            kcal.innerHTML = "Kcal: "+ data[index].kcal;// set the text to be the value am passing
+            container.appendChild(kcal); //adds the created element to the container
             document.getElementsByTagName("main")[0].appendChild(container); // returns an element with the given tag name
             const ctx = myElement.getContext('2d');  //looks for myelement in the html and reads it in javascript. getcontent('2d') draws in the canverse tag the parameter provided
             const myChart = new Chart(ctx, {
@@ -37,7 +40,7 @@ function loadchart() {
                 datasets: [test]
             },
             options: {
-               
+                responsive: true,
                 plugins: {
                   title: {
                     display: true,
@@ -98,3 +101,5 @@ function loadchart() {
     
 };
 document.addEventListener('DOMContentLoaded', loadchart); // loads the function after the page is loaded
+
+

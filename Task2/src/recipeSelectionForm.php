@@ -22,7 +22,7 @@
             include('./connection.php');   //database connection
 
             $records =$pdo->query('select e.id,e.title,e.author,e.preparationtime,e.cookingtime,e.complexity,e.serves,e.description,e.ratings,i.ingredient,n.kcal,n.fat,n.saturates,n.carbs,n.sugars,n.fibre,n.protein,n.salt,s.step from Recipes e left join Ingredients i on e.id=i.id left join nutritionperserving n on e.id=n.id left join Steps s on e.id=s.id');// query to select columns in the database  using join statement.
-            echo '<table><tr><th>Check</th><th>Id</th> <th>Title</th><th>Author</th><th>PreparationTime</th><th>CookingTime</th><th>Complexity</th><th>Serves</th><th>description</th><th>Ratings</th><th>Ingredient</th><th>Kcal</th><th>Fat</th><th>Saturates</th><th>carbs</th><th>Sugars</th><th>Fibre</th><th>Protein</th><th>Salt</th><th>Steps</th></tr>'; //display the table with head
+            echo '<table><tr><th>Check</th><th>Id</th><th>Title</th><th>Author</th><th>PreparationTime</th><th>CookingTime</th><th>Complexity</th><th>Serves</th><th>description</th><th>Ratings</th><th>Ingredient</th><th>Kcal</th><th>Fat</th><th>Saturates</th><th>carbs</th><th>Sugars</th><th>Fibre</th><th>Protein</th><th>Salt</th><th>Steps</th></tr>'; //display the table with head
             
             foreach ($records as $row){  //loops through the data and add it to the appropiate row
                 echo '<tr><td><input type="checkbox"  name="check_list[]" value="'.$row['id'].'"/></td><td>'.$row['id'] .'</td><td>'.$row['title'].'</td><td>'.$row['author'].'</td>

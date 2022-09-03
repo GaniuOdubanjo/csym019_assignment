@@ -9,10 +9,10 @@
   
     <body>
         <div>
-            <h1>LOGIN Page</h1>
+            <h1>Login Page</h1>
             <form   action="login.php"  method="POST"> <!--form element takes username and password -->
-            username: <input type="text" name="username">    
-            password: <input type="password" name="password" placeholder="Enter username">
+            username: <input type="text" name="username" placeholder="Enter username">    
+            password: <input type="password" name="password" placeholder="Enter password">
             <input type='Submit' name='submit' value='login'>
 </form>
 </div>
